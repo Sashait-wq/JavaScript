@@ -1,43 +1,162 @@
-// 1 
+// ----------- Функції: калькулятор -----------
 
-const name = "Sasha";
-const age = 19;
+// Калькулятор 1 
+function calculate(a, b, operator) {
 
-console.log(name);
-console.log(age);
+  let sum;
 
-// 2 
+  switch (operator) {
+    case "+":
+      sum = a + b;
+      break;
+    case "-":
+      sum = a - b;
+      break;
+    case "*":
+      sum = a * b;
+      break;
+    case "/":
+      if (b === 0) {
+        return "error";
+      }
+      sum = a / b;
+      break;
+    default:
+      return "error: Некоректний оператор";
+  }
 
-let string1 = "Hello";
-let string2 = "World";
+  
+  if (!isFinite(sum)) {
+    return "error: Некоректний результат";
+  }
 
-let resultString  = `${string1} ${string2}` ;
+  return sum;
+}
 
-console.log(resultString);
+console.log(calculate(10, 5, "+"))
+console.log(calculate(10, 5, "*"))
+console.log(calculate(200, 2, "/"))
+console.log(calculate(10, 5, "-"))
+console.log(calculate(10, 0, "&"))
+console.log(calculate(10, 0, "&"))
 
-// 3 
 
-let num1 = 20;
-let num2 = 2;
+// Калькулятор 2 
+function promptCalculator(a, b, operator){
+   
+  let sum;
 
-console.log(num1 + num2);
-console.log(num1 - num2);
-console.log(num1 * num2);
-console.log(num1 / num2);
+   a = prompt("One number", " ")
 
-// 4
+   if(isNaN(a) || a === " "){
+     alert("Not a number");
+     return;
+   }
 
-let strNum = "5";
+   b = prompt("Two number", " ")
 
-let convertedNum = Number(strNum);
-console.log(convertedNum);
+   if(isNaN(b) || b === " "){
+     alert("Not a number");
+     return;
+   }
 
-// 5 
+   operator = prompt("(+, -, *, /)", " ")
+   if(operator === "+" || operator === "-" || operator === "/" || operator === "*"){ 
+      
+   }else{
+     return alert(`Character is not defined: ${operator}`);
+   }
 
-let strValue = "Hello";
-let booleanStr = Boolean(strValue);
-console.log(booleanStr);
+   switch (operator) {
+      case "+":
+        sum = +a + +b;
+        break;
+      case "-":
+        sum = a - b;
+        break;
+      case "*":
+        sum = a * b;
+        break;
+      case "/":
+        if (b === 0) {
+          return "error";
+        }
+        sum = a / b;
+        break;
+      default:
+        return "error: Некоректний оператор";
+    }
 
-let numValue = 0;
-let booleanNum = Boolean(numValue);
-console.log(booleanNum); 
+    if (!isFinite(sum) || sum === 0) {
+      return alert("error: Некоректний результат");
+    } 
+  
+    return alert(`Результат: ${a} ${operator} ${b} = ${sum}`);
+
+}
+
+promptCalculator()
+
+
+// ----------- Цикли -----------
+
+// Виведення чисел у діапазоні
+let j = 100;
+
+for(let i = 1; i <= j; i++ ){
+    if(i % 5 == 0){
+        console.log(i);
+    }
+} 
+  
+// Просте число
+  function isPrime(n) {
+    for(let i = 2; i < n; i++){
+        if(n % i === 0){
+         return false;
+        }
+    }
+    return true;
+  }
+  console.log(isPrime(7));
+  console.log(isPrime(11));
+  console.log(isPrime(13));
+  console.log(isPrime(8));
+  console.log(isPrime(12));
+  console.log(isPrime(10));
+
+
+// Задача з ялинкою
+  let n = 3; 
+
+for (let i = 1; i <= n; i++) {
+    let row = ""; 
+    for (let j = 1; j <= n + i - 1; j++) {
+        if (j <= n - i) {
+            row += " "; 
+        } else {
+            row += "*"; 
+        }
+
+    }
+    console.log(row); 
+}
+
+
+
+// Шахова дошка
+let size = 8;
+let simbolWhite = "*"
+let simbolBlack = "#";
+
+for(let i = 0; i < size; i++){
+ let line = " ";
+ 
+  for(let j = 0; j < size; j++){
+   
+    line += (i + j) % 2 === 0 ? simbolWhite : simbolBlack;
+  
+}
+console.log(line);
+
+}
