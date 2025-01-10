@@ -1,162 +1,65 @@
-// ----------- Функції: калькулятор -----------
+// Завдання 1: Генерація випадкового кольору
 
-// Калькулятор 1 
-function calculate(a, b, operator) {
+function generateRandomColors() {
+  const colors = [];
 
-  let sum;
-
-  switch (operator) {
-    case "+":
-      sum = a + b;
-      break;
-    case "-":
-      sum = a - b;
-      break;
-    case "*":
-      sum = a * b;
-      break;
-    case "/":
-      if (b === 0) {
-        return "error";
-      }
-      sum = a / b;
-      break;
-    default:
-      return "error: Некоректний оператор";
+  for (let i = 0; i < 5; i++) {
+    
+    const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
+    
+    const color = `#${red}${green}${blue}`;
+    colors.push(color);
   }
 
-  
-  if (!isFinite(sum)) {
-    return "error: Некоректний результат";
+  return colors;
+}
+
+const randomColors = generateRandomColors();
+console.log(randomColors);
+
+
+// Завдання 2: Випадковий вибір значення
+const fruits1 = ['apple', 'banana', 'cherry', 'date', 'grape'];
+
+function randomChoice(array) {
+  const randomIndex = Math.floor(Math.random() * array.length);
+  return array[randomIndex];
+}
+console.log(randomChoice(fruits1)); 
+
+const fruits2 = ['apple', 'banana', 'cherry', 'date', 'grape'];
+const randomIndex2 = fruits2.sort(() => Math.random() - 0.5);
+console.log(randomIndex2[0]);
+
+
+// Завдання 3: Випадковий масив чисел
+function generationRandomArray(n, min, max){
+  const arr = [];
+
+  for (let i = 0; i < n; i++) {
+    const items = Math.floor(Math.random() * (max - min + 1) + min);
+    arr.push(items);
   }
 
-  return sum;
-}
-
-console.log(calculate(10, 5, "+"))
-console.log(calculate(10, 5, "*"))
-console.log(calculate(200, 2, "/"))
-console.log(calculate(10, 5, "-"))
-console.log(calculate(10, 0, "&"))
-console.log(calculate(10, 0, "&"))
-
-
-// Калькулятор 2 
-function promptCalculator(a, b, operator){
-   
-  let sum;
-
-   a = prompt("One number", " ")
-
-   if(isNaN(a) || a === " "){
-     alert("Not a number");
-     return;
-   }
-
-   b = prompt("Two number", " ")
-
-   if(isNaN(b) || b === " "){
-     alert("Not a number");
-     return;
-   }
-
-   operator = prompt("(+, -, *, /)", " ")
-   if(operator === "+" || operator === "-" || operator === "/" || operator === "*"){ 
-      
-   }else{
-     return alert(`Character is not defined: ${operator}`);
-   }
-
-   switch (operator) {
-      case "+":
-        sum = +a + +b;
-        break;
-      case "-":
-        sum = a - b;
-        break;
-      case "*":
-        sum = a * b;
-        break;
-      case "/":
-        if (b === 0) {
-          return "error";
-        }
-        sum = a / b;
-        break;
-      default:
-        return "error: Некоректний оператор";
-    }
-
-    if (!isFinite(sum) || sum === 0) {
-      return alert("error: Некоректний результат");
-    } 
-  
-    return alert(`Результат: ${a} ${operator} ${b} = ${sum}`);
+  return arr;
 
 }
 
-promptCalculator()
+console.log(generationRandomArray(5, 1, 100));
 
+// Завдання 4: Округлення випадкових чисел
+const MathRandom = Math.random() * 100;
 
-// ----------- Цикли -----------
+console.log(`Округлення до найближчого: ${Math.round(MathRandom)}`);
+console.log(`Округлення вниз: ${Math.floor(MathRandom)}`);
+console.log(`Округлення вгору: ${Math.ceil(MathRandom)}`);
+console.log(MathRandom);
 
-// Виведення чисел у діапазоні
-let j = 100;
+// Завдання 5: Сортування масиву за випадковим порядком
+const numbers = [1, 2, 3, 4, 5];
 
-for(let i = 1; i <= j; i++ ){
-    if(i % 5 == 0){
-        console.log(i);
-    }
-} 
-  
-// Просте число
-  function isPrime(n) {
-    for(let i = 2; i < n; i++){
-        if(n % i === 0){
-         return false;
-        }
-    }
-    return true;
-  }
-  console.log(isPrime(7));
-  console.log(isPrime(11));
-  console.log(isPrime(13));
-  console.log(isPrime(8));
-  console.log(isPrime(12));
-  console.log(isPrime(10));
+numbers.sort(() => Math.random() - 0.5);
 
-
-// Задача з ялинкою
-  let n = 3; 
-
-for (let i = 1; i <= n; i++) {
-    let row = ""; 
-    for (let j = 1; j <= n + i - 1; j++) {
-        if (j <= n - i) {
-            row += " "; 
-        } else {
-            row += "*"; 
-        }
-
-    }
-    console.log(row); 
-}
-
-
-
-// Шахова дошка
-let size = 8;
-let simbolWhite = "*"
-let simbolBlack = "#";
-
-for(let i = 0; i < size; i++){
- let line = " ";
- 
-  for(let j = 0; j < size; j++){
-   
-    line += (i + j) % 2 === 0 ? simbolWhite : simbolBlack;
-  
-}
-console.log(line);
-
-}
+console.log(numbers);
