@@ -1,65 +1,105 @@
-// Завдання 1: Генерація випадкового кольору
-
-function generateRandomColors() {
-  const colors = [];
-
-  for (let i = 0; i < 5; i++) {
-    
-    const red = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const green = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    const blue = Math.floor(Math.random() * 256).toString(16).padStart(2, '0');
-    
-    const color = `#${red}${green}${blue}`;
-    colors.push(color);
-  }
-
-  return colors;
+// Завдання 1: 
+function fetchData1() {
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      const UsersAge = 20;
+      if (UsersAge >= 18 ) {
+        resolve("Вам більше 18 років")
+      }else{
+        reject("Користувачеві менше 18 років");
+      }
+    }, 3000)  // він в нас знаходиться в стані очікування / pending, із за того, що в нас є функція setTimeout. 
+  });
 }
 
-const randomColors = generateRandomColors();
-console.log(randomColors);
+fetchData1().then(data => console.log(data)).catch(error => console.log(error));
 
 
-// Завдання 2: Випадковий вибір значення
-const fruits1 = ['apple', 'banana', 'cherry', 'date', 'grape'];
 
-function randomChoice(array) {
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-console.log(randomChoice(fruits1)); 
-
-const fruits2 = ['apple', 'banana', 'cherry', 'date', 'grape'];
-const randomIndex2 = fruits2.sort(() => Math.random() - 0.5);
-console.log(randomIndex2[0]);
-
-
-// Завдання 3: Випадковий масив чисел
-function generationRandomArray(n, min, max){
-  const arr = [];
-
-  for (let i = 0; i < n; i++) {
-    const items = Math.floor(Math.random() * (max - min + 1) + min);
-    arr.push(items);
-  }
-
-  return arr;
-
+// Завдання 2:
+function fetchData() {
+  return new Promise((resolve, reject) => {
+    const success = Math.random() > 0.7; 
+    setTimeout(() => (success ? resolve("Дані отримано") : reject("Помилка")), 500);
+  });
 }
 
-console.log(generationRandomArray(5, 1, 100));
+function retryFetch(fetchData, retries) {
+  return new Promise((resolve, reject) => {
+    function attemptData() {
+      fetchData()
+        .then(resolve) 
+        .catch((error) => {
+          if (retries <= 5) {
+            retries++; 
+            console.log(`Спроба не вдалася: ${retries}`);
+            attemptData(); 
+          } else {
+            reject(error);
+          }
+        });
+    }
 
-// Завдання 4: Округлення випадкових чисел
-const MathRandom = Math.random() * 100;
+    attemptData(); 
+  });
+}
 
-console.log(`Округлення до найближчого: ${Math.round(MathRandom)}`);
-console.log(`Округлення вниз: ${Math.floor(MathRandom)}`);
-console.log(`Округлення вгору: ${Math.ceil(MathRandom)}`);
-console.log(MathRandom);
+// Використання retryFetch
+retryFetch(fetchData, 0)
+  .then((data) => console.log("Успіх:", data)) 
+  .catch((err) => console.error("Не вдалося отримати дані:", err)); 
 
-// Завдання 5: Сортування масиву за випадковим порядком
-const numbers = [1, 2, 3, 4, 5];
 
-numbers.sort(() => Math.random() - 0.5);
 
-console.log(numbers);
+// Завдання: 3
+const cart = [
+  { name: "Телефон", price: 700, quantity: 1 },
+  { name: "Ноутбук", price: 1500, quantity: 2 },
+  { name: "Мишка", price: 50, quantity: 3 },
+];
+
+function calculateTotal(cart) {
+
+const calculateTotalReduce = cart.reduce((calculate, currentValue) => {
+return calculate += (currentValue.price * currentValue.quantity);
+}, 0)
+
+return calculateTotalReduce;
+}
+console.log(calculateTotal(cart)); // Очікується: 3850
+
+
+// Завдання: 4
+function mergeObjects(obj1, obj2) {
+  return { ...obj1, ...obj2 };  // було об'єднання obj2.
+}
+
+const obj1 = { a: 1, b: 2 };
+const obj2 = { b: 3, c: 4 };
+
+const merged = mergeObjects(obj1, obj2);
+
+console.log(merged); // Очікується: { a: 1, b: 3, c: 4 }
+console.log(obj1);   // Очікується: { a: 1, b: 2 } (не має змінюватися)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
