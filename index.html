@@ -5,7 +5,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
   </head>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* стилі для вирівнювання 2-х блоків */
+    .container {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 30px;
+      width: 100%;
+    }
+    /* Задача 1 */
+    .container-size {
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+      gap: 20px;
+      padding: 20px;
+      border: 1px solid rgb(0, 0, 0, 0.5);
+      box-shadow: 0 0 5px rgb(0, 0, 0, 0.5);
+      margin-top: 10px;
+    }
+
+    .width-size {
+      color: rgb(43, 167, 43);
+      text-shadow: 0px 0px 2px rgb(43, 167, 43);
+      letter-spacing: 1px;
+    }
+
+    .height-size {
+      color: rgb(43, 167, 43);
+      text-shadow: 0px 0px 2px rgb(43, 167, 43);
+      letter-spacing: 1px;
+    }
+
+    .small-size {
+      text-shadow: 0px 0px 2px rgb(216, 52, 52);
+      color: rgb(216, 52, 52);
+    }
+
+    /* Задача 2 */
+    #timer {
+      color: rgb(103 145 236);
+      font-size: 1.5rem;
+    }
+
+    /* Задача 3 */
+    .tabs-header {
+      display: flex;
+      border-bottom: 1px solid black;
+    }
+
+    .tab {
+      padding: 10px;
+      cursor: pointer;
+      border: 1px solid #ccc;
+      border-bottom: none;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      background: #f9f9f9;
+    }
+
+    .tab.active {
+      background: #fff;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ccc;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+  </style>
   <body>
+    <div class="container">
+      <!--  Задача 1  -->
+      <div class="container-size"></div>
+
+      <!-- Задача 2  -->
+      <div id="timer"></div>
+    </div>
+
     <script src="./script.js"></script>
   </body>
 </html>

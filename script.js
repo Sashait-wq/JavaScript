@@ -1,105 +1,135 @@
-// Завдання 1: 
-function fetchData1() {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      const UsersAge = 20;
-      if (UsersAge >= 18 ) {
-        resolve("Вам більше 18 років")
-      }else{
-        reject("Користувачеві менше 18 років");
-      }
-    }, 3000)  // він в нас знаходиться в стані очікування / pending, із за того, що в нас є функція setTimeout. 
-  });
+// Задача 1: Відстеження розміру вікна
+
+// створення функції для tag і selectorю
+function createTagAndSelectors(tag, selector){
+  const element = document.createElement(tag);
+  element.className = selector;
+  return element;
 }
 
-fetchData1().then(data => console.log(data)).catch(error => console.log(error));
+// функції додавання та видалення classList
+function addClassList(item, classList){
+  return item.classList.add(classList);
+ }
 
+ function removeClassList(item, classList){
+  return item.classList.remove(classList);
+ }
 
+const windowWidth1 = document.querySelector(".container-size")
 
-// Завдання 2:
-function fetchData() {
-  return new Promise((resolve, reject) => {
-    const success = Math.random() > 0.7; 
-    setTimeout(() => (success ? resolve("Дані отримано") : reject("Помилка")), 500);
-  });
-}
+// Створюємо елемент для ширини.
+const widthElement  = createTagAndSelectors("p", "width-size");
 
-function retryFetch(fetchData, retries) {
-  return new Promise((resolve, reject) => {
-    function attemptData() {
-      fetchData()
-        .then(resolve) 
-        .catch((error) => {
-          if (retries <= 5) {
-            retries++; 
-            console.log(`Спроба не вдалася: ${retries}`);
-            attemptData(); 
-          } else {
-            reject(error);
-          }
-        });
+// Створюємо елемент для висоти.
+const heightElement = createTagAndSelectors("p", "height-size");
+
+// Додаємо елементи до контейнера
+windowWidth1.append(widthElement , heightElement)
+
+function widthAndHeight(){
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+   
+    if(width > 500){
+      widthElement.innerText = `Поточна ширина: ${width}px`;
+      removeClassList(widthElement, "small-size")
+    }else{
+      addClassList(widthElement, "small-size")
+      widthElement.innerText = `Розмір вікна занадто малий: ${width}px!`;
     }
-
-    attemptData(); 
-  });
+    
+    if(height > 500){
+      removeClassList(heightElement, "small-size")
+      heightElement.innerText = `Поточна висота: ${height} px`;
+    }else{
+      addClassList(heightElement, "small-size")
+      heightElement.innerText = `Поточна висота занадто мала: ${height} px`;
+    }   
 }
 
-// Використання retryFetch
-retryFetch(fetchData, 0)
-  .then((data) => console.log("Успіх:", data)) 
-  .catch((err) => console.error("Не вдалося отримати дані:", err)); 
+// Додаємо обробник події resize
+window.addEventListener("resize", widthAndHeight);
+widthAndHeight();
 
 
 
-// Завдання: 3
-const cart = [
-  { name: "Телефон", price: 700, quantity: 1 },
-  { name: "Ноутбук", price: 1500, quantity: 2 },
-  { name: "Мишка", price: 50, quantity: 3 },
-];
+// Задача 2: Таймер і робота з location
+const timer = document.getElementById("timer")
+timer.innerText = "Відлік:"
 
-function calculateTotal(cart) {
+let count = 11;
 
-const calculateTotalReduce = cart.reduce((calculate, currentValue) => {
-return calculate += (currentValue.price * currentValue.quantity);
-}, 0)
+const intervalId = setInterval(() => {
+  count--;
+  timer.innerText = `Відлік: ${count}`
+  if (count === 0) {
+    clearInterval(intervalId);
+    
+    // для зручності створенно confirm.
+    const response = confirm("Ви точно хочете перейти на сайт?"); 
+    if(response){
+      timer.innerText = "Перенаправлення..." 
+      location.href = "https://google.com"
+    }else[
+      timer.innerText = "Скасовано!"
+    ]
+  }
+}, 1000);
 
-return calculateTotalReduce;
-}
-console.log(calculateTotal(cart)); // Очікується: 3850
-
-
-// Завдання: 4
-function mergeObjects(obj1, obj2) {
-  return { ...obj1, ...obj2 };  // було об'єднання obj2.
-}
-
-const obj1 = { a: 1, b: 2 };
-const obj2 = { b: 3, c: 4 };
-
-const merged = mergeObjects(obj1, obj2);
-
-console.log(merged); // Очікується: { a: 1, b: 3, c: 4 }
-console.log(obj1);   // Очікується: { a: 1, b: 2 } (не має змінюватися)
+// Для зручності.
+const container = document.querySelector(".container");
+container.append(windowWidth1, timer);
 
 
 
+// Задача: 3
+const createElement = (selector, className) => {
+        const elem = document.createElement(selector);
+        elem.className = className;
+        return elem;
+    }
+    const tabsContainer = createElement('div', 'tabs-container')
+    const tabs = createElement('div', 'tabs-header')
+    const tabsContents = createElement('div', 'tabs-contents')
+    for (let i = 1; i <= 3; i++) {
+        createTabsHead(i)
+        createTabsContent(i)
+    }
+    
+    function createTabsContent(i) {
+        const tab = createElement('div', 'tab')
+        if (i === 1) {
+            tab.classList.add('active');
+        }
+        tab.setAttribute('data-tab', i);
+        tab.textContent = `Tab index: ${ i }`;
+        tab.addEventListener('click', () => switchTabs(tab))
+        tabs.appendChild(tab);
+    }
+    
+    function createTabsHead(i) {
+        const tabContent = createElement('div', 'tab-content')
+        if (i === 1) {
+            tabContent.classList.add('active')
+        }
+        tabContent.textContent = `Tab index: ${ i }`;
+        tabContent.id = `tab-${ i }`;
+        tabsContents.appendChild(tabContent);
+    }
+    
+    tabsContainer.appendChild(tabs);
+    tabsContainer.appendChild(tabsContents);
+    document.body.appendChild(tabsContainer);
 
+    function switchTabs(tabContent) {
+      if (tabContent.classList.contains("active")) {
+          return;
+      }
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'))
+      document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'))
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      const selectContent = document.getElementById(`tab-${ tabContent.getAttribute('data-tab') }`);
+      tabContent.classList.add('active')
+      selectContent.classList.add('active')
+  }
