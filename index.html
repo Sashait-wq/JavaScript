@@ -3,73 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles.css" />
     <title>Document</title>
   </head>
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      display: flex;
-      align-items: center;
-      flex-direction: column;
-      justify-content: center;
-      height: 100vh;
-    }
-
-    #countText {
-      padding-bottom: 25px;
-      color: #8bc34a;
-      font-size: 1.3rem;
-    }
-
-    #title {
-      margin-top: 25px;
-      margin-bottom: 25px;
-    }
-
-    #previewContaner {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      max-width: 480px;
-      width: 100%;
-      box-shadow: 2px 4px 12px #636363;
-      padding: 5px;
-      flex-wrap: wrap;
-      background: linear-gradient(#f5f0f0, #e3ffb2);
-    }
-
-    .imgViev {
-      width: 150px;
-      height: 150px;
-      border-radius: 8%;
-      object-fit: cover;
-    }
-
-    .downloadImg {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      width: 100px;
-      height: 50px;
-      border: 1px solid #486427;
-      color: #72a03d;
-    }
-  </style>
   <body>
-    <p id="countText"></p>
-    <div id="previewContaner">
-      <label class="downloadImg imgViev">
-        <input type="file" id="ImgInput" multiple hidden="" accept="image/*" />
-        Download
-      </label>
-    </div>
-
     <script src="./script.js"></script>
   </body>
 </html>
