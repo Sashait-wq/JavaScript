@@ -1,22 +1,4 @@
-  const bookItem = [
-    {
-        title: 'Book Title',
-        autor: 'Book autor',
-        imgUrl: '',
-        id: '1234-4321',
-        fav: false,
-        description: 'description',
-        text: 'text book text',
-    }, {
-        title: 'Book Title1',
-        autor: 'Book autor2',
-        imgUrl: '',
-        id: '1234-4321323',
-        fav: true,
-        description: 'description1',
-        text: 'text book text1',
-    },
-]
+ let bookItem = []
 
 function createAside() {
     const formFild = [
@@ -25,34 +7,32 @@ function createAside() {
             placeholder: 'Enter Book Title',
             type: 'text',
             name: 'title',
-            accept: null
+            req: true
         }, {
             title: 'Book Autor',
             placeholder: 'Enter Book Autor',
             type: 'text',
             name: 'autor',
-            accept: null
+            req: true
         }, {
-            title: 'Select Book Img',
+            title: 'Select Book Image',
             placeholder: null,
             type: 'file',
             name: 'img',
-            accept: "image/*"   // 1 завдання: додавання accept: "image/*" для перевірки, що це картинка.
+            req: false
         },
     ]
     const form = document.createElement('form');
     formFild.forEach(f => {
-        const field = createFormRow(f.title, f.type, f.name, f.placeholder, f.accept);
+        const field = createFormRow(f.title, f.type, f.name, f.placeholder, f.req);
         form.append(field);
     })
 
-    const label = createElement('label');
+    const label = document.createElement('label');
     label.innerHTML = `
-             <label class="form-footer">
-                <input name="id" type="text">
-                <button type="button">set ID</button>
-                or
-                <button type="button">radnom</button>
+    <label>
+                <input required name="randomID" type="text">
+                <button onclick="generateRandomID(16, '_random_')" type="button">radnom ID</button>
             </label>
             <div class="form-action">
                 <button type="submit">create book</button>
@@ -62,59 +42,82 @@ function createAside() {
     return form;
 };
 
+// є завдання, і є моє рішення, воно працює але правильно воно виглядає чи ні 
+function createFormRow(title, type = 'text', name = null, placeholder = null, req = false) {
 
-
-function createFormRow(title, type = 'text', name = null, placeholder = null, accept = null) {
-    // Продумати, як можна додати до типу файл , фільтер що це картинки
-
-    const divFormRow = createElement("div", "form-row");
-
-    const label = createElement("label");
-    const input = createElement("input");
+    const divFormRow = document.createElement("div");
+    divFormRow.classList.add("form-row");
+    const label = document.createElement("label");
+    const input = document.createElement("input");
     if (placeholder) {
         input.placeholder = placeholder;
     }
-    if(name){
+    if (name) {
         input.name = name;
     }
+    input.required = req;
+    if (type === 'file') {
+        input.hidden = true;
+        label.classList.add('select_img');
+        
+        // 2_HW  зробити видаляння поточної картинки, та повернення тексту назат
+        input.addEventListener('change', function (e) {
+            const files = e.target.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.classList.add('imgViev');
+                    label.innerHTML = ``;
+                    label.prepend(img);
+                }
+                reader.readAsDataURL(file);
+            }
+        })
 
-    // перевірка на, що це картинка;
-    if(accept){
-      input.accept = accept;
+        // За допомогою dblclick буде remove img. І потім повертаємо все назад. 
+        label.addEventListener("dblclick", () => {
+            const img = label.querySelector('.imgViev');
+            if (img){  
+              img.remove(); 
+            } 
+            label.textContent = 'Select Book Image';
+            label.append(input);
+        });
     }
-    
     input.type = type;
-    label.append(title, input); // скоротив до одного append.
+    label.append(title);
+    label.append(input);
 
     divFormRow.append(label);
     return divFormRow
 };
 
-function createMainConteiner() {
-    const div = createElement("div", "main-container");
+function createMainConteiner(createAside, createRightContainer) {
+    const div = document.createElement("div");
+    div.classList.add("main-container")
 
     const aside = createAside();
     aside.classList.add("aside");
     const right = createRightContainer();
-
-    div.append(aside, right) // скоротив до одного append.
-
+    div.appendChild(aside);
+    div.appendChild(right);
     document.getElementsByTagName("body")[0].appendChild(div);
+    createBookFromForm();
+
 };
 
-createMainConteiner();
+createMainConteiner(createAside, createRightContainer);
 
 // почати використовувати всюди
 function createElement(elem, classList) {
+    // що робити якщо "classList" массив
+    // що робити якщо "classList" строка
+    // як повинен вирулювати в коді
     const div = document.createElement(elem);
-
-    // Перевіряємо, чи classList є масивом
-    if (Array.isArray(classList)) {
-        div.classList.add(...classList); 
-    } else if (typeof classList === "string") {
-        div.classList.add(classList);  
-    }
-
+    div.classList.add(classList);
     return div;
 }
 
@@ -126,8 +129,10 @@ function createRightContainer() {
     const formTitle = createFormRow('Title');
     const formFav = createFormRow('Favorite', 'checkbox');
 
-    rowDiv.append(formTitle, formAutor, formFav);  // скоротив до одного append.
-   
+    rowDiv.append(formTitle);
+    rowDiv.append(formAutor);
+    rowDiv.append(formFav);
+
     const card2 = createElement('div', 'card');
     const itemList = createElement('div', 'item-list');
     bookItem.forEach((item) => {
@@ -135,27 +140,23 @@ function createRightContainer() {
     })
     card2.append(itemList);
     card.appendChild(rowDiv);
-
-    container.append(card, card2) // скоротив до одного append.
+    container.appendChild(card);
+    container.appendChild(card2);
     return container;
 }
 
-
 function createItem(item) {
     const itemDiv = createElement('div', 'item');
-    itemDiv.id = item.id;
-
+    itemDiv.id = item.randomID; 
     // коли нема посилання на картинку. встановити дефолт Картинку
+
     // подумати як зробити img
-
-    const defaultImage = "https://cdn.vectorstock.com/i/500p/32/45/no-image-symbol-missing-available-icon-gallery-vector-45703245.jpg";
-
-    const imgUrl = item.imgUrl !== "" ? item.imgUrl : defaultImage;
-    
+    const classFav = item.fav ? 'item-fav item-fav-active' : 'item-fav';
+   
     itemDiv.innerHTML = `
     <div class="item-info">
          <div class="item-img">
-             <img src="${ imgUrl }" alt="">
+             <img class="img-2" src="${ item.imgUr }" alt="">
          </div>
          <div class="item-box">
              <h3 class="item-title">${ item.title }</h3>
@@ -163,33 +164,149 @@ function createItem(item) {
          </div>
      </div>
      <div class="item-controll">
-     <label class="label-fav" >fav<input class="item-fav-check" value="${ item.fav }" type="checkbox"></label>
-         <button>edit</button>
-         <button>del</button>
+        <label class="${ classFav }">fav<input hidden="" onclick="updateItemFav('${ itemDiv.id }')" value="${ item.fav }" type="checkbox"></label>
+         <button onclick="editItem('${ itemDiv.id }')">edit</button>
+         <button onclick="deleteItem('${ itemDiv.id }')">del</button>
      </div>
     `;
-
+    
     return itemDiv;
 }
-function createBookFromForm(){
+
+function createBookFromForm() {
     const form = document.querySelector('form');
 
-    console.log(form);
-    
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const formData = new FormData(form);
+        const book = {
+            fav: false,
+            description: '',
+            text: '',
+        }
+        for (const [key, value] of formData.entries()) {
 
-form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    const formData = new FormData(form);
-    const book = {}
-    for (const [key, value] of formData.entries()) {
-        book[key] = value;
-    }
-    console.log(book);
-});
+            book[key] = value;
+        }
+        setItemByStorage(book);
+        bookItem.push(book);
+        updateItemList();
+        form.reset();
+    });
 }
-createBookFromForm()
+
+function updateItemList() {
+    const list = document.querySelector('.item-list');
+    list.innerHTML = '';
+    bookItem.forEach((item) => {
+        list.append(createItem(item));
+    })
+}
+
+function generateRandomID(length, prefix) {
+    const charts = 'QWERTYUIOPLKJHGFDSAZXVBVBNNMqwertyuioplkjhgfdsazxvbvbnnm1234567890';
+    let id = prefix;
+    for (let i = 0; i < length; i++) {
+        id += charts.charAt(Math.floor(Math.random() * charts.length));
+    }
+    document.querySelector('input[name="randomID"]').value = id;
+}
+
+function setItemByStorage(item) {
+    localStorage.setItem('items', JSON.stringify([item]));
+}
+
+function updateItemFav(id) {
+    bookItem.forEach((item) => item.randomID === id && (item.fav = !item.fav));
+
+    updateItemList();
+}
+
+function deleteItem(id) {
+    bookItem=   bookItem.filter(item => item.randomID !== id);
+    updateItemList();
+}
 
 
 
 
-  
+function editItem() {
+    const mainContainer = document.querySelector('.main-container');
+    
+    // Видаляє старий main-container і створює новийй. 
+    mainContainer.remove();
+
+    createMainConteiner(createdNewAside, createdNewRightContainer);
+}
+
+
+function createdNewAside(){
+   
+    const NewAsideContainer = createElement("div", "aside")
+    
+    const createNewSelectImage = createFormRow('Select image', 'file', "img")
+
+    NewAsideContainer.appendChild(createNewSelectImage)
+ 
+    // Повертаємо елемент aside
+    return NewAsideContainer;
+}
+
+function createdNewRightContainer(){
+
+    // Наші поля
+    const NewFormFild = [
+        {
+            title: 'Show ID',
+            placeholder: '',
+            type: 'text',
+            name: 'randomID',
+            req: true
+        }, {
+            title: 'Edit title',
+            placeholder: 'Enter Book Title',
+            type: 'text',
+            name: 'autor',
+            req: true
+        }, {
+            title: 'Edit ID',
+            placeholder: 'Enter Book ID',
+            type: 'text',
+            name: 'Enter Book',
+            req: false
+        },{
+            title: 'Description',
+            placeholder: 'Enter description',
+            type: 'textarea',
+            name: 'Book Description',
+            req: false
+        },{
+            title: 'Edit full text',
+            placeholder: 'Enter Book Text',
+            type: 'textarea',
+            name: 'Edit text',
+            req: false
+        }
+    ]
+    
+    const NewRightContainer = createElement("div", "right-container")
+    const form = document.createElement('form')
+
+     // Додаємо поля до форми
+    NewFormFild.forEach(f => {
+        const field = createFormRow(f.title, f.type, f.name, f.placeholder, f.req);
+        form.append(field);
+    })
+    
+    NewRightContainer.append(form);
+
+     // Повертаємо елемент aboutBookss
+     return NewRightContainer;
+}
+
+// Я не знаю, як створити textarea. 
+
+
+
+
+
