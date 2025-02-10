@@ -7,6 +7,34 @@
     <title>Document</title>
   </head>
   <body>
+    <form class="style-form">
+      <label class="style-label">
+        Номер телефону:
+        <input type="text" name="phone" class="style-input" placeholder=" " />
+      </label>
+
+      <label class="style-label">
+        Введіть країну:
+        <input
+          type="text"
+          name="country"
+          class="style-input"
+          list="country-list"
+          placeholder="Ваша країна"
+        />
+      </label>
+
+      <datalist id="country-list">
+        <option value="ua"></option>
+        <option value="uk"></option>
+        <option value="fr"></option>
+      </datalist>
+
+      <button disabled="true" type="submit" id="btn-submit">
+        Відправити номер телефону
+      </button>
+    </form>
+
     <script src="./script.js"></script>
   </body>
 </html>

@@ -1,208 +1,108 @@
+:root{
+    --color-w: #fff;
+    --bg-linear-grad: linear-gradient(135deg, #8bff00, #0923ee);
+    --color-g:#2ecc71;
+    --color-r: #e74c3c;
+}
+
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Roboto', serif;
-
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
-    background: #071c5d;
-    font-family: 'Roboto', serif;
-
-}
-
-.row {
     display: flex;
-    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: var(--bg-linear-grad);
 }
 
-.main-container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+/* Стилі форми */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 350px;
+    gap: 15px;
     padding: 25px;
-    display: grid;
-    grid-template-columns: 1fr 3fr;
-    gap: 20px;
-    background: #f5f5f5;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    box-shadow: 7px 8px 10px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+    letter-spacing: 1px;
 }
 
-.aside {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 16px;
+/* Заголовки */
+label {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    color: var(--color-w);
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 600;
 }
 
-.right-container {
-    background: #ffffff;
-    border-radius: 8px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+::placeholder{
+    color: var(--color-w);#
 }
 
-.card {
-    border-radius: 4px;
-    border: 1px solid #071c5d;
-}
-
-/*
-зробити стиля для кнопок, універсальні
-*/
-.item-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+/* Інпут */
+input {
     padding: 10px;
-    background: #f9f9f9;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-radius: 6px;
-    border: 1px solid #cbcbcb;
-    background: #ffffff;
-    transition: transform 0.2s;
-}
-
-.item:hover {
-    transform: scale(1.02);
-}
-
-.item-info {
-    gap: 10px;
-    display: flex;
-}
-
-.item-img {
-    width: 100px;
-    height: 120px;
-    border-radius: 6px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.item-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.item-title {
-    font-size: 1.5em;
-    font-weight: bold;
-}
-
-.item-author {
-    font-size: 0.9em;
-    color: grey;
-}
-
-.select_img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 150px;
-    height: 200px;
-    border: 1px dotted grey;
-}
-
-.select_img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.item-fav {
-    border: 1px dotted #071c5d;
-    background: #0a58ca;
-    border-radius: 2px;
-    color: white;
-    padding: 2px;
-    transition: .3s;
-}
-.item-fav-active{
-    background: #2ee504;
-    border: 1px dotted #e3ff00;
-    color: black;
-}
-
-.select_img {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 150px;
-    height: 200px;
-    border: 1px dotted grey;
-    margin-bottom: 10px;
-    gap: 10px;
-}
-
-.select_img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.form-row {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-}
-
-textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-button {
-    background: #071c5d;
-    color: white;
     border: none;
-    padding: 10px 15px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.3s, transform 0.2s;
-}
-
-button:hover {
-    background: #0a58ca;
-    transform: translateY(-2px);
-}
-
-input[type="text"],
-input[type="file"],
-textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #cbcbcb;
-    border-radius: 6px;
-    background-color: #f9f9f9;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-    transition: border-color 0.3s, box-shadow 0.3s;
-}
-
-input[type="text"]:focus,
-input[type="file"]:focus,
-textarea:focus {
-    border-color: #0a58ca;
-    box-shadow: 0 0 5px rgba(10, 88, 202, 0.5);
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 14px;
+    transition: 0.3s;
     outline: none;
+    letter-spacing: 1px;
+}
+
+/* Інпут при фокусі */
+input:focus {
+    background: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+}
+
+.green {
+    border: 2px solid var(--color-g);
+}
+
+.red {
+    border: 2px solid var(--color-r);
+}
+
+/* Стилі для кнопки */
+#btn-submit {
+    padding: 12px;
+    border: none;
+    cursor: pointer;
+    background: var(--bg-linear-grad);
+    border-radius: 8px;
+    color: var(--color-w);
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+    letter-spacing: 1px;
+}
+
+/* Eфект для кнопки */
+#btn-submit:hover {
+    transform: scale(1.05);
+}
+
+/* Вимкнена кнопка */
+#btn-submit:disabled {
+    background: linear-gradient(to top, #555555, #d4d4d4);
+    cursor: not-allowed;
+    box-shadow: none;
 }
 
