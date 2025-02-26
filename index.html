@@ -4,37 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./styles.css" />
-    <title>Document</title>
+    <title>Roulette</title>
   </head>
   <body>
-    <form class="style-form">
-      <label class="style-label">
-        Номер телефону:
-        <input type="text" name="phone" class="style-input" placeholder=" " />
-      </label>
-
-      <label class="style-label">
-        Введіть країну:
-        <input
-          type="text"
-          name="country"
-          class="style-input"
-          list="country-list"
-          placeholder="Ваша країна"
-        />
-      </label>
-
-      <datalist id="country-list">
-        <option value="ua"></option>
-        <option value="uk"></option>
-        <option value="fr"></option>
-      </datalist>
-
-      <button disabled="true" type="submit" id="btn-submit">
-        Відправити номер телефону
-      </button>
-    </form>
-
+  
+    <div class="container">
+      <div class="row">
+        <div class="parent-img">
+      </div>
+    </div>
+    <div class="container-btn">
+    <button id="click-btn">click and win</button>
+    <button id="add-btn">add element</button>
+    <button disabled id="remove-btn">remove element</button>
+  </div>
+    <div class="modal">
+      <div class="modal-win">
+        <button class="remove-btn_two">clear</button>
+      </div>
+    </div>
+    
     <script src="./script.js"></script>
   </body>
 </html>
